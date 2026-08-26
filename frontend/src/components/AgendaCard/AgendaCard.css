@@ -1,0 +1,111 @@
+h1 {
+  font-size: 12px;
+  text-align: left;
+  letter-spacing: 1px;
+
+  margin-left: 1rem;
+}
+
+.agenda-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 0;
+
+  font-family:
+    "IBM Plex Mono",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+}
+
+.agenda-datetime {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
+.corner {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+}
+
+.corner-tl {
+  top: 0;
+  left: 0;
+  border-top: 2px solid #8499f1;
+  border-left: 2px solid #8499f1;
+}
+
+.corner-tr {
+  top: 0;
+  right: 0;
+  border-top: 2px solid #8499f1;
+  border-right: 2px solid #8499f1;
+}
+
+.corner-bl {
+  bottom: 0;
+  left: 0;
+  border-bottom: 2px solid #8499f1;
+  border-left: 2px solid #8499f1;
+}
+
+.corner-br {
+  bottom: 0;
+  right: 0;
+  border-bottom: 2px solid #8499f1;
+  border-right: 2px solid #8499f1;
+}
+
+.agenda-content {
+  width: 100%;
+  max-width: 100%;
+  flex: 1;
+
+  margin: 1rem 0;
+}
+
+.agenda-card-items {
+  margin: 1rem 0;
+}
+
+#agenda-date {
+  position: relative;
+
+  font-family:
+    "Anka Coder",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+  font-size: 3.5rem;
+
+  color: #13121d;
+  padding: 1.3rem 3rem;
+}
+
+#agenda-datetime-time {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.block-card {
+  border: 1px solid #fbfbfb;
+  border-radius: 4px;
+
+  padding: 1.2rem;
+  margin: 0.5rem 0;
+
+  box-shadow:
+    -4px -2px 4px rgba(0, 0, 0, 0.02),
+    2px 0 2px rgba(0, 0, 0, 0.03),
+    0 2px 4px rgba(0, 0, 0, 0.08);
+}

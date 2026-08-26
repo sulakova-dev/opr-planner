@@ -1,0 +1,9 @@
+header {
+  padding: 1rem 0 1.4rem;
+  font-size: 14px;
+  border-bottom: 1px solid #f8f8f9;
+}
+#page-title::after {
+  content: "•";
+  margin: 0 14px;
+}
