@@ -1,5 +1,11 @@
 import "./PlannerBlock.css";
 
+interface PlannerBlockProps {
+  blockType: string;
+  users: string[];
+  descript?: string | null;
+}
+
 const typeMeta = {
   lifehack: {
     title: "Лайфхаки",
@@ -83,15 +89,19 @@ const typeMeta = {
   },
 };
 
-function PlannerBlock({ blockType, users, descript }) {
+function PlannerBlock({ blockType, users, descript }: PlannerBlockProps) {
+  const meta = typeMeta[blockType as keyof typeof typeMeta];
+
+  if (!meta) {
+    return <div className="block-card">Неизвестный тип блока: {blockType}</div>;
+  }
+
   return (
     <div className="block-card">
-      <span className="icon-badge">
-        <p>{typeMeta[blockType].icon}</p>
-      </span>
-      <span>{typeMeta[blockType].title}</span>
+      <span className="icon-badge">{meta.icon}</span>
+      <span>{meta.title}</span>
       <span>{users.join(", ")}</span>
-      <span>{descript}</span>
+      {descript && <span>{descript}</span>}
     </div>
   );
 }

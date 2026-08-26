@@ -90,6 +90,8 @@ function AgendaCard() {
         <h1>БЛИЖАЙШАЯ ПЛАНЁРКА</h1>
 
         {sortedBlocks.map((block) => {
+          if (!block) return null;
+
           return (
             <PlannerBlock
               blockType={block.type}
