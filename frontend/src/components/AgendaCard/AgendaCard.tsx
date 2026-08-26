@@ -4,6 +4,21 @@ import { useState, useEffect } from "react";
 import PlannerBlock from "../PlannerBlock/PlannerBlock";
 
 import "./AgendaCard.css";
+
+type Participant = string;
+
+type Block = {
+  type: string;
+  description: string | null;
+  participants: Participant[];
+};
+
+type Meeting = {
+  date: string;
+  time: string;
+  blocks: Block[];
+};
+
 const ClockIcon = () => (
   <svg
     className="agenda-datetime__icon"
@@ -21,7 +36,7 @@ const ClockIcon = () => (
 function AgendaCard() {
   const order = ["lifehack", "code_review", "extra"];
 
-  const [meeting, setMeeting] = useState(null);
+  const [meeting, setMeeting] = useState<Meeting | null>(null);
 
   useEffect(() => {
     axios
