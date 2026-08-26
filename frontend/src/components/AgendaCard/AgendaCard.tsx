@@ -25,7 +25,7 @@ function AgendaCard() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5001/api/next-meeting")
+      .get("https://opr-planner.onrender.com/api/next-meeting")
       .then((res) => {
         setMeeting(res.data[0]);
       })
