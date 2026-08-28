@@ -1,10 +1,7 @@
 import { useState } from "react";
-
 import Select from "react-select";
-
-import "./AdminPage.css";
-
 import axios from "axios";
+import "./AdminPage.css";
 
 function AdminPage() {
   const [date, setDate] = useState("");
@@ -27,6 +24,7 @@ function AdminPage() {
 
     try {
       await axios.post("/api/meetings", payload);
+      alert("Планёрка создана!");
     } catch (err) {
       console.log((err as Error).message);
     }
@@ -35,66 +33,65 @@ function AdminPage() {
   }
 
   return (
-    <>
-      <form>
-        <h1>Создание новой планерки</h1>
+    <form>
+      <h1>Создание новой планерки</h1>
 
-        <div id="meet-timing">
-          <div id="date">
-            <label htmlFor="meeting-date">Дата</label>
-            <input
-              id="meeting-date"
-              type="date"
-              value={date}
-              onChange={(e) => setDate(e.target.value)}
-            />
-          </div>
-
-          <div id="time">
-            <label htmlFor="meeting-time">Время</label>
-            <input
-              id="meeting-time"
-              type="time"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-            />
-          </div>
+      <div id="meet-timing">
+        <div id="date">
+          <label htmlFor="meeting-date">Дата</label>
+          <input
+            id="meeting-date"
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+          />
         </div>
 
-        <div>
-          <h2>Блоки планерки</h2>
-          <div id="blocks">
-            <div className="block">
-              <div id="lifehacks">
-                <h3>Лайфхаки</h3>
-                <Select
-                  isMulti
-                  options={options}
-                  placeholder="Выбрать участников..."
-                />
-                <button>Удалить </button>
-              </div>
-            </div>
+        <div id="time">
+          <label htmlFor="meeting-time">Время</label>
+          <input
+            id="meeting-time"
+            type="time"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+          />
+        </div>
+      </div>
 
-            <div className="block">
-              <div id="code-review">
-                <h3>Код-ревью</h3>
-                <Select
-                  isMulti
-                  options={options}
-                  placeholder="Выбрать участников..."
-                />
-                <button>Удалить </button>
-              </div>
+      <div>
+        <h2>Блоки планерки</h2>
+        <div id="blocks">
+          <div className="block">
+            <div id="lifehacks">
+              <h3>Лайфхаки</h3>
+              <Select
+                isMulti
+                options={options}
+                placeholder="Выбрать участников..."
+              />
+              <button>Удалить</button>
+            </div>
+          </div>
+
+          <div className="block">
+            <div id="code-review">
+              <h3>Код-ревью</h3>
+              <Select
+                isMulti
+                options={options}
+                placeholder="Выбрать участников..."
+              />
+              <button>Удалить</button>
             </div>
           </div>
         </div>
-        <button id="add-btn">+ Дополнительно</button>
-        <button id="submit-btn" onClick={handleSubmit}>
-          Создать планерку
-        </button>
-      </form>
-    </>
+      </div>
+
+      <button id="add-btn">+ Дополнительно</button>
+      <button id="submit-btn" onClick={handleSubmit}>
+        Создать планерку
+      </button>
+    </form>
   );
 }
 
