@@ -16,7 +16,7 @@ function AdminPage() {
     { value: "3", label: "employee3" },
   ];
 
-  async function handleSubmit(e) {
+  async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
 
     const payload = {
@@ -28,7 +28,7 @@ function AdminPage() {
     try {
       await axios.post("/api/meetings", payload);
     } catch (err) {
-      console.log(err.message);
+      console.log((err as Error).message);
     }
 
     console.log("Отправляем:", date, time);
