@@ -19,6 +19,23 @@ const pool = new Pool({
   port: process.env.DB_PORT,
 });
 
+app.post("/api/meetings", async (req, res) => {
+  const { date, time, blocks } = req.body;
+  console.log("Получено:", { date, time, blocks });
+
+  try {
+    const result = await pool.query(
+      "INSERT INTO meetings (date, time) VALUES ($1, $2) RETURNING id",
+      [date, time]
+    );
+    const meetingId = result.rows[0].id;
+    res.status(201).json({ message: "OK", meetingId });
+  } catch (err) {
+    console.error("Ошибка при создании встречи:", err.message);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get("/api/next-meeting", async (req, res) => {
   try {
     const result = await pool.query(`
