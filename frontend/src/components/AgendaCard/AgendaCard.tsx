@@ -40,7 +40,7 @@ function AgendaCard() {
 
   useEffect(() => {
     axios
-      .get("https://opr-planner.onrender.com/api/next-meeting")
+      .get("https://opr-planner.vercel.app/api/next-meeting")
       .then((res) => {
         setMeeting(res.data[0]);
       })
