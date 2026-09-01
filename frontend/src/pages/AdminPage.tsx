@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
-import Select from "react-select";
 import axios from "axios";
+import Select from "react-select";
+
 import "./AdminPage.css";
 
 type Employee = {
@@ -10,15 +11,49 @@ type Employee = {
 
 type Option = { value: string; label: string };
 
+function getNextFriday() {
+  const today = new Date();
+  const nextFriday = new Date(today);
+
+  const dayOfWeek = today.getDay();
+
+  const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
+
+  nextFriday.setDate(today.getDate() + daysUntilFriday);
+  return nextFriday.toISOString().split("T")[0];
+}
+
 function AdminPage() {
-  const [date, setDate] = useState("");
-  const [time, setTime] = useState("");
+  const [error, setError] = useState("");
+
+  const [date, setMeetingDate] = useState(getNextFriday());
+  const [time, setTime] = useState("11:00");
   const [employees, setEmployees] = useState<Option[]>([]);
 
   const [blocks, setBlocks] = useState([
     { type: "lifehack", participants: [] as number[], description: null },
     { type: "code_review", participants: [] as number[], description: null },
   ]);
+
+  function validateForm() {
+    const hasEmptyParticipants = blocks.some(
+      (block) => block.participants.length === 0,
+    );
+
+    if (hasEmptyParticipants) {
+      setError("В каждом блоке должен быть хотя бы один участник");
+      return false;
+    }
+
+    const extraBlock = blocks.find((block) => block.type === "extra");
+    if (extraBlock && !extraBlock.description) {
+      setError("Заполните описание для блока 'Дополнительно'");
+      return false;
+    }
+
+    setError("");
+    return true;
+  }
 
   useEffect(() => {
     axios.get("/api/employees").then((res) => {
@@ -32,6 +67,8 @@ function AdminPage() {
 
   async function handleSubmit(e: React.SyntheticEvent) {
     e.preventDefault();
+
+    if (!validateForm()) return;
 
     const payload = {
       date,
@@ -60,7 +97,7 @@ function AdminPage() {
             id="meeting-date"
             type="date"
             value={date}
-            onChange={(e) => setDate(e.target.value)}
+            onChange={(e) => setMeetingDate(e.target.value)}
           />
         </div>
 
@@ -75,52 +112,63 @@ function AdminPage() {
         </div>
       </div>
 
-      <div>
+      <div className="blocks">
         <h2>Блоки планерки</h2>
-        <div id="blocks">
+        {error && <div className="error">{error}</div>}
+        <div>
           <div className="block">
             <div id="lifehacks">
               <h3>Лайфхаки</h3>
-              <Select
-                isMulti
-                options={employees}
-                placeholder="Выбрать участников..."
-                onChange={(selected) => {
-                  const ids = selected.map((item) => Number(item.value));
-                  setBlocks((prev) => {
-                    const newBlocks = [...prev];
-                    newBlocks[0].participants = ids;
-                    return newBlocks;
-                  });
-                }}
-              />
-              <button type="button">Удалить</button>
+
+              <div className="select-wrapper">
+                <Select
+                  isMulti
+                  options={employees}
+                  placeholder="Выбрать участников..."
+                  onChange={(selected) => {
+                    const ids = selected.map((item) => Number(item.value));
+                    setBlocks((prev) => {
+                      const newBlocks = [...prev];
+                      newBlocks[0].participants = ids;
+                      return newBlocks;
+                    });
+                  }}
+                />
+              </div>
+
+              <button type="button" id="dlt-btn">
+                Удалить
+              </button>
             </div>
           </div>
 
           <div className="block">
             <div id="code-review">
               <h3>Код-ревью</h3>
-              <Select
-                isMulti
-                options={employees}
-                placeholder="Выбрать участников..."
-                onChange={(selected) => {
-                  const ids = selected.map((item) => Number(item.value));
-                  setBlocks((prev) => {
-                    const newBlocks = [...prev];
-                    newBlocks[1].participants = ids;
-                    return newBlocks;
-                  });
-                }}
-              />
-              <button type="button">Удалить</button>
+              <div className="select-wrapper">
+                <Select
+                  isMulti
+                  options={employees}
+                  placeholder="Выбрать участников..."
+                  onChange={(selected) => {
+                    const ids = selected.map((item) => Number(item.value));
+                    setBlocks((prev) => {
+                      const newBlocks = [...prev];
+                      newBlocks[1].participants = ids;
+                      return newBlocks;
+                    });
+                  }}
+                />
+              </div>
+              <button type="button" id="dlt-btn">
+                Удалить
+              </button>
             </div>
           </div>
+          <button id="add-btn">+ Добавить блок</button>
         </div>
       </div>
 
-      <button id="add-btn">+ Дополнительно</button>
       <button id="submit-btn" onClick={handleSubmit}>
         Создать планерку
       </button>

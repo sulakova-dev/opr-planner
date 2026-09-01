@@ -39,6 +39,10 @@ function AgendaCard() {
   const [meeting, setMeeting] = useState<Meeting | null>(null);
 
   useEffect(() => {
+
+    
+
+
     axios
       .get("https://opr-planner.vercel.app/api/next-meeting")
       .then((res) => {
