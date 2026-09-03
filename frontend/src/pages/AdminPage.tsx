@@ -9,6 +9,14 @@ type Employee = {
   full_name: string;
 };
 
+type BlockType = "lifehack" | "code_review" | "extra";
+
+const blockInfo: Record<BlockType, { title: string }> = {
+  lifehack: { title: "Лайфхаки" },
+  code_review: { title: "Код-ревью" },
+  extra: { title: "Дополнительно" },
+};
+
 type Option = { value: string; label: string };
 
 function getNextFriday() {
@@ -34,6 +42,20 @@ function AdminPage() {
     { type: "lifehack", participants: [] as number[], description: null },
     { type: "code_review", participants: [] as number[], description: null },
   ]);
+
+  function handleDeleteBlock(index: number) {
+    const newBlocks = blocks.filter((_, i) => i !== index);
+    setBlocks(newBlocks);
+  }
+
+  function handleAddBlock() {
+    const newBlocks = [
+      ...blocks,
+      { type: "extra", participants: [] as number[], description: null },
+    ];
+    console.log("Добавляю блок:", newBlocks);
+    setBlocks(newBlocks);
+  }
 
   function validateForm() {
     const hasEmptyParticipants = blocks.some(
@@ -114,59 +136,67 @@ function AdminPage() {
 
       <div className="blocks">
         <h2>Блоки планерки</h2>
+
         {error && <div className="error">{error}</div>}
-        <div>
-          <div className="block">
-            <div id="lifehacks">
-              <h3>Лайфхаки</h3>
 
-              <div className="select-wrapper">
-                <Select
-                  isMulti
-                  options={employees}
-                  placeholder="Выбрать участников..."
-                  onChange={(selected) => {
-                    const ids = selected.map((item) => Number(item.value));
-                    setBlocks((prev) => {
-                      const newBlocks = [...prev];
-                      newBlocks[0].participants = ids;
-                      return newBlocks;
-                    });
-                  }}
-                />
-              </div>
-
-              <button type="button" id="dlt-btn">
-                Удалить
-              </button>
-            </div>
+        {blocks.length === 0 ? (
+          <div id="no-blocks-message">
+            <p>Сейчас блоков нет. Добавьте блок, чтобы создать встречу.</p>
+            <button id="add-btn" type="button" onClick={() => handleAddBlock()}>
+              + Добавить блок
+            </button>
           </div>
+        ) : (
+          <div>
+            {blocks.map((block, i) => (
+              <div className="block" key={i}>
+                <div className="block-content">
+                  <h3>
+                    {blockInfo[block.type as keyof typeof blockInfo]?.title}
+                  </h3>
 
-          <div className="block">
-            <div id="code-review">
-              <h3>Код-ревью</h3>
-              <div className="select-wrapper">
-                <Select
-                  isMulti
-                  options={employees}
-                  placeholder="Выбрать участников..."
-                  onChange={(selected) => {
-                    const ids = selected.map((item) => Number(item.value));
-                    setBlocks((prev) => {
-                      const newBlocks = [...prev];
-                      newBlocks[1].participants = ids;
-                      return newBlocks;
-                    });
-                  }}
-                />
+                  {block.type === "extra" ? (
+                    <div className="description">
+                      <textarea
+                        placeholder="Тема для обсуждения"
+                        value={block.description || ""}
+                      />
+                    </div>
+                  ) : (
+                    <div className="select-wrapper">
+                      <Select
+                        isMulti
+                        options={employees}
+                        placeholder="Выбрать участников..."
+                        onChange={(selected) => {
+                          const ids = selected.map((item) =>
+                            Number(item.value),
+                          );
+                          setBlocks((prev) => {
+                            const newBlocks = [...prev];
+                            newBlocks[i].participants = ids;
+                            return newBlocks;
+                          });
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  <button
+                    type="button"
+                    id="dlt-btn"
+                    onClick={() => handleDeleteBlock(i)}
+                  >
+                    Удалить
+                  </button>
+                </div>
               </div>
-              <button type="button" id="dlt-btn">
-                Удалить
-              </button>
-            </div>
+            ))}
+            <button id="add-btn" type="button" onClick={() => handleAddBlock()}>
+              + Добавить блок
+            </button>
           </div>
-          <button id="add-btn">+ Добавить блок</button>
-        </div>
+        )}
       </div>
 
       <button id="submit-btn" onClick={handleSubmit}>

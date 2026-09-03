@@ -66,8 +66,7 @@ input[type="time"] {
     0 2px 4px rgba(0, 0, 0, 0.08);
 }
 
-#lifehacks,
-#code-review {
+.block-content {
   display: flex;
   gap: 2rem;
   align-items: center;
@@ -99,6 +98,31 @@ button {
 
 #dlt-btn {
   color: #de4d42;
+}
+
+#no-blocks-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  padding: 2rem;
+  text-align: center;
+  color: #94a3b8;
+  border: 2px dashed #e2e8f0;
+  border-radius: 8px;
+}
+
+#no-blocks-message button {
+  width: auto;
+}
+
+.description textarea {
+  min-width: 800px;
+  padding: 0.6rem 1rem;
+  font-size: 1rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-family: inherit;
 }
 
 @media (max-width: 768px) {
@@ -133,14 +157,13 @@ button {
     padding: 0.6rem;
   }
 
-  /* Блоки */
   .block {
     padding: 1rem;
     gap: 1.5rem;
   }
 
-  #lifehacks,
-  #code-review {
+  .block-content {
+    display: flex;
     flex-direction: column;
     gap: 1rem;
   }
