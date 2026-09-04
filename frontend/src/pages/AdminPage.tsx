@@ -28,7 +28,12 @@ function getNextFriday() {
   const daysUntilFriday = (5 - dayOfWeek + 7) % 7;
 
   nextFriday.setDate(today.getDate() + daysUntilFriday);
-  return nextFriday.toISOString().split("T")[0];
+
+  const year = nextFriday.getFullYear();
+  const month = String(nextFriday.getMonth() + 1).padStart(2, "0");
+  const day = String(nextFriday.getDate()).padStart(2, "0");
+
+  return `${year}-${month}-${day}`;
 }
 
 function AdminPage() {
@@ -42,6 +47,9 @@ function AdminPage() {
     { type: "lifehack", participants: [] as number[], description: null },
     { type: "code_review", participants: [] as number[], description: null },
   ]);
+
+  //const [showMenu, setShowMenu] = useState(false);
+
 
   function handleDeleteBlock(index: number) {
     const newBlocks = blocks.filter((_, i) => i !== index);
@@ -107,7 +115,10 @@ function AdminPage() {
 
     console.log("Отправляем:", date, time);
   }
-
+  const [showMenu, setShowMenu] = useState(false);
+  const availableTypes = ["lifehack", "code_review", "extra"].filter(
+    (type) => !blocks.some((block) => block.type === type),
+  );
   return (
     <form>
       <h1>Создание новой планерки</h1>
@@ -145,6 +156,23 @@ function AdminPage() {
             <button id="add-btn" type="button" onClick={() => handleAddBlock()}>
               + Добавить блок
             </button>
+
+            {showMenu && availableTypes.length > 0 && (
+              <div className="add-block-menu">
+                {availableTypes.map((type) => (
+                  <button
+                    key={type}
+                    type="button"
+                    onClick={() => {
+                      handleAddBlock(type as BlockType);
+                      setShowMenu(false);
+                    }}
+                  >
+                    {blockInfo[type as keyof typeof blockInfo]?.title}
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
         ) : (
           <div>
