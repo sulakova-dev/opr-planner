@@ -76,3 +76,113 @@
 #user {
   margin-right: 2rem;
 }
+
+@media screen and (max-width: 768px) {
+  .planner-block {
+    padding: 1rem;
+    gap: 6px;
+  }
+
+  .icon-badge {
+    width: 40px;
+    height: 40px;
+    padding: 0.8rem;
+  }
+
+  .icon-badge svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  #block-title {
+    width: auto;
+    min-width: 80px;
+    font-size: 13px;
+    padding: 0 0.5rem;
+    margin-right: 1rem;
+  }
+
+  .block-user {
+    margin-left: 0;
+    font-size: 12px;
+  }
+
+  #short-name {
+    padding: 0.7rem 0.8rem;
+    font-size: 10px;
+  }
+
+  #user {
+    margin-right: 1rem;
+    font-size: 12px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .planner-block {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 16px;
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  }
+
+  #block-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #1a1a1a;
+    letter-spacing: -0.01em;
+    padding: 0;
+    margin: 0;
+  }
+
+  .block-user {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
+  .user-item {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background: #f5f5f5;
+    border-radius: 8px;
+    transition: background 0.15s ease;
+    width: 100%;
+  }
+
+  .user-item:active {
+    background: #ebebeb;
+  }
+
+  #short-name,
+  .user-avatar {
+    display: none !important;
+  }
+
+  #user {
+    font-size: 14px;
+    font-weight: 500;
+    color: #1a1a1a;
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    width: 100%;
+  }
+
+  .block-descript {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #6b6f76;
+    margin: 0;
+    padding: 4px 0 0 0;
+    border-top: 1px solid #f0f0f0;
+  }
+}

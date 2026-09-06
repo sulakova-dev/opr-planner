@@ -106,7 +106,7 @@ function shortName(fullName: string): string {
 function PlannerBlock({ blockType, users, descript }: PlannerBlockProps) {
   const meta = typeMeta[blockType as keyof typeof typeMeta];
 
-  const config = typeMeta[blockType as keyof typeof typeMeta];
+  //const config = typeMeta[blockType as keyof typeof typeMeta];
 
   if (!meta) {
     return <div className="block-card">Неизвестный тип блока: {blockType}</div>;
@@ -116,18 +116,22 @@ function PlannerBlock({ blockType, users, descript }: PlannerBlockProps) {
     <div className="block-card">
       <span
         className="icon-badge"
-        style={{ background: config.color, color: config.text }}
+        style={{ background: meta.color, color: meta.text }}
       >
         {meta.icon}
       </span>
       <span id="block-title">{meta.title}</span>
-      {users.map((user) => (
-        <>
-          <span id="short-name">{shortName(user)}</span>
-          <span id="user">{user}</span>
-        </>
-      ))}
-      {descript && <span>{descript}</span>}
+
+      <div className="block-user">
+        {users.map((user, index) => (
+          <span key={index} className="user-item">
+            <span id="short-name">{shortName(user)}</span>
+            <span id="user">{user}</span>
+          </span>
+        ))}
+      </div>
+
+      {descript && <span className="block-descript">{descript}</span>}
     </div>
   );
 }
