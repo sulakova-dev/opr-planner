@@ -10,11 +10,12 @@ app.use(cors());
 app.use(express.json());
 
 const port = process.env.PORT;
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "securepassword123";
 
 const pool = new Pool({
-  user: process.env.DB_USER,      // ← было process.env.USER
+  user: process.env.DB_USER,
   host: process.env.DB_HOST,
-  database: process.env.DB_NAME,  // ← было process.env.DB
+  database: process.env.DB_NAME,
   password: process.env.DB_PASSWORD,
   port: process.env.DB_PORT,
 });
@@ -95,6 +96,21 @@ app.get("/api/next-meeting", async (req, res) => {
     res.json(result.rows);
   } catch (err) {
     res.status(500).json({ error: err.message });
+  }
+});
+
+
+app.post("/api/auth", async (req, res) => {
+  const { password } = req.body;
+
+  if (!password) {
+    return res.status(400).json({ error: "Пароль обязателен" });
+  }
+
+  if (password === ADMIN_PASSWORD) {
+    res.json({ success: true });
+  } else {
+    res.status(401).json({ error: "Неверный пароль" });
   }
 });
 
