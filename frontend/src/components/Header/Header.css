@@ -1,9 +1,129 @@
 header {
-  padding: 1rem 1.5rem 1.4rem;
+  padding: 0.3rem 1.5rem 0.5rem;
+
   font-size: 14px;
-  border-bottom: 1px solid #F0F2F4;
+  border-bottom: 1px solid #f0f2f4;
 }
 #page-title::after {
   content: "•";
   margin: 0 14px;
+}
+
+#header-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 50px;
+}
+
+#add-planer {
+  padding: 0.8rem 1rem;
+  min-width: 44px;
+  min-height: 44px;
+
+  border: 1px solid #f4f6f7;
+  border-radius: 8px;
+
+  background: transparent;
+  color: #1e293b;
+
+  font-size: 1.2rem;
+  font-weight: 500;
+
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.auth-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.auth-modal {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  min-width: 320px;
+  max-width: 90%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+.auth-modal h2 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.auth-modal input {
+  width: 100%;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.auth-modal input:focus {
+  outline: none;
+  border-color: #7381ed;
+  box-shadow: 0 0 0 3px rgba(115, 129, 237, 0.15);
+}
+
+.auth-error {
+  color: #ef4444;
+  font-size: 0.85rem;
+  margin: 0.25rem 0 0.5rem 0;
+}
+
+.auth-actions {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.auth-actions button {
+  padding: 0.5rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.auth-actions button[type="button"] {
+  background: #f1f5f9;
+  color: #475569;
+}
+
+.auth-actions button[type="submit"] {
+  background: #7381ed;
+  color: white;
+}
+
+.auth-actions button[type="submit"]:hover {
+  background: #5a6bd6;
+}
+
+@media (max-width: 768px) {
+  #add-planer {
+    margin: 0;
+    max-width: 25px;
+    max-height: 25px;
+  }
+}
+
+@media (max-width: 480px) {
+  #add-planer {
+    padding: 0;
+    margin: 0;
+    max-width: 25px;
+    max-height: 25px;
+  }
 }
