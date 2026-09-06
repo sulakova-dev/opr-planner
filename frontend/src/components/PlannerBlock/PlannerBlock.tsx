@@ -8,6 +8,8 @@ interface PlannerBlockProps {
 
 const typeMeta = {
   lifehack: {
+    color: "#fbeed9",
+    text: "#b3792b",
     title: "Лайфхаки",
     icon: (
       <svg
@@ -39,6 +41,8 @@ const typeMeta = {
     ),
   },
   code_review: {
+    color: "#EAF7EE",
+    text: "#74B484",
     title: "Код-ревью",
     icon: (
       <svg
@@ -72,6 +76,8 @@ const typeMeta = {
     ),
   },
   extra: {
+    color: "#EDE9FE",
+    text: "#b3792b",
     title: "Дополнительно",
     icon: (
       <svg
@@ -89,8 +95,18 @@ const typeMeta = {
   },
 };
 
+function shortName(fullName: string): string {
+  return fullName
+    .split(" ")
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+}
+
 function PlannerBlock({ blockType, users, descript }: PlannerBlockProps) {
   const meta = typeMeta[blockType as keyof typeof typeMeta];
+
+  const config = typeMeta[blockType as keyof typeof typeMeta];
 
   if (!meta) {
     return <div className="block-card">Неизвестный тип блока: {blockType}</div>;
@@ -98,9 +114,19 @@ function PlannerBlock({ blockType, users, descript }: PlannerBlockProps) {
 
   return (
     <div className="block-card">
-      <span className="icon-badge">{meta.icon}</span>
-      <span>{meta.title}</span>
-      <span>{users.join(", ")}</span>
+      <span
+        className="icon-badge"
+        style={{ background: config.color, color: config.text }}
+      >
+        {meta.icon}
+      </span>
+      <span id="block-title">{meta.title}</span>
+      {users.map((user) => (
+        <>
+          <span id="short-name">{shortName(user)}</span>
+          <span id="user">{user}</span>
+        </>
+      ))}
       {descript && <span>{descript}</span>}
     </div>
   );

@@ -23,6 +23,7 @@
   color: #b3792b;
   padding: 1.2rem;
   margin-right: 1rem;
+  margin-left: 0.3rem;
 }
 
 .block-name {
@@ -53,4 +54,25 @@
   font-size: 11px;
   font-weight: 500;
   flex-shrink: 0;
+}
+
+#block-title {
+  display: inline-block;
+  width: 130px;
+  flex-shrink: 0;
+  font-weight: bolder;
+  padding: 0 1rem;
+  margin-right: 2rem;
+}
+
+#short-name {
+  padding: 0.95rem 1rem;
+  margin-right: 1rem;
+  border: 1px solid #e7f5eb;
+  background: #e7f5eb;
+  border-radius: 50%;
+}
+
+#user {
+  margin-right: 2rem;
 }
