@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Select from "react-select";
 
@@ -8,6 +9,15 @@ import { getNextFriday } from "../utils/dateUtils";
 import "./AdminPage.css";
 
 function AdminPage() {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const isAuth = localStorage.getItem("adminAuth") === "true";
+    if (!isAuth) {
+      navigate("/");
+    }
+  }, [navigate]);
+
   const [formData, setFormData] = useState({
     date: getNextFriday(),
     time: "11:00",

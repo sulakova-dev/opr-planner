@@ -41,6 +41,14 @@ function Header() {
     <>
       <header>
         <div id="header-info">
+          {isAdminPage && (
+            <button
+              id="add-planer"
+              onClick={() => (window.location.href = "/")}
+            >
+              ←
+            </button>
+          )}
           <div>
             <span id="page-title">ПЛАНЁРКИ</span>
             <span>НЕОСИСТЕМЫ</span>
