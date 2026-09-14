@@ -49,7 +49,7 @@ function Header() {
               ←
             </button>
           )}
-          <div>
+          <div translate="no">
             <span id="page-title">ПЛАНЁРКИ</span>
             <span>НЕОСИСТЕМЫ</span>
           </div>

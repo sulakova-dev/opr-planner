@@ -39,10 +39,6 @@ function AgendaCard() {
   const [meeting, setMeeting] = useState<Meeting | null>(null);
 
   useEffect(() => {
-
-    
-
-
     axios
       .get("https://opr-planner.vercel.app/api/next-meeting")
       .then((res) => {
@@ -62,7 +58,7 @@ function AgendaCard() {
   });
 
   return (
-    <main className="agenda-card">
+    <main className="agenda-card" translate="no">
       <div className="agenda-datetime">
         <span>
           {new Date(meeting.date).toLocaleDateString("ru-Ru", {
