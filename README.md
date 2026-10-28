@@ -6,7 +6,7 @@ A small web app for planning weekly team meetings in the Production Solutions De
 
 *Upcoming meeting page*:
 
-<img width="700" alt="" src="https://github.com/user-attachments/assets/ba6c749d-80d4-4dbd-89ae-0fe690f27540" />
+<img width="700" alt="" src="https://github.com/user-attachments/assets/5c93a578-2c3d-44e2-a18a-5042d4481722" />
 
 ## Why
 
