@@ -1,65 +1,60 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 import PlannerBlock from "../PlannerBlock/PlannerBlock";
+import { ClockIcon } from "../../icons/ClockIcon";
+
+import type { Meeting } from "../../types";
 
 import "./AgendaCard.css";
 
-type Participant = string;
-
-type Block = {
-  type: string;
-  description: string | null;
-  participants: Participant[];
-};
-
-type Meeting = {
-  date: string;
-  time: string;
-  blocks: Block[];
-};
-
-const ClockIcon = () => (
-  <svg
-    className="agenda-datetime__icon"
-    width="14"
-    height="14"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-  >
-    <circle cx="12" cy="12" r="10" strokeWidth="2" />
-    <path d="M12 6V12L16 14" strokeWidth="2" strokeLinecap="round" />
-  </svg>
-);
+type Status = "loading" | "empty" | "error" | "success";
 
 function AgendaCard() {
   const order = ["lifehack", "code_review", "extra"];
 
   const [meeting, setMeeting] = useState<Meeting | null>(null);
+  const [status, setStatus] = useState<Status>("loading");
 
   useEffect(() => {
     axios
       .get("https://opr-planner.vercel.app/api/next-meeting")
       .then((res) => {
-        setMeeting(res.data[0]);
+        const meetings = res.data;
+        if (meetings.length === 0) {
+          setStatus("empty");
+        } else {
+          setStatus("success");
+          setMeeting(meetings[0]);
+        }
       })
       .catch((err) => {
         console.log("Error", err);
+        setStatus("error");
       });
   }, []);
 
-  if (!meeting) {
+  if (status === "loading") {
     return <div>Загрузка...</div>;
   }
+
+  if (status === "empty") {
+    return <div>Следующая планёрка пока не назначена.</div>;
+  }
+
+  if (status === "error") {
+    return <div>Не удалось загрузить. Попробуйте позже или включите VPN.</div>;
+  }
+
+  if (!meeting) return null;
 
   const sortedBlocks = order.map((type) => {
     return meeting.blocks.find((block) => block.type === type);
   });
 
   return (
-    <main className="agenda-card" translate="no">
-      <div className="agenda-datetime">
+    <article className="agenda-card" translate="no">
+      <header className="agenda-datetime">
         <span>
           {new Date(meeting.date).toLocaleDateString("ru-Ru", {
             weekday: "long",
@@ -84,9 +79,9 @@ function AgendaCard() {
           <ClockIcon />
           <time> {meeting.time.slice(0, 5)}</time>
         </div>
-      </div>
+      </header>
 
-      <div className="agenda-content">
+      <section className="agenda-content">
         <h1>БЛИЖАЙШАЯ ПЛАНЁРКА</h1>
 
         {sortedBlocks.map((block) => {
@@ -100,8 +95,8 @@ function AgendaCard() {
             />
           );
         })}
-      </div>
-    </main>
+      </section>
+    </article>
   );
 }
 
