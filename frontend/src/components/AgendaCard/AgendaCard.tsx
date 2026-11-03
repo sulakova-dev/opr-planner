@@ -89,6 +89,7 @@ function AgendaCard() {
 
           return (
             <PlannerBlock
+              key={block.type}
               blockType={block.type}
               users={block.participants}
               descript={block.description}
